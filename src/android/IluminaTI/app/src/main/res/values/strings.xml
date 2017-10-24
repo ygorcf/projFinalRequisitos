@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">IluminaTI</string>
+
+    <string name="btnCheckin">Check-in</string>
+    <string name="btnCronograma">Cronograma</string>
+    <string name="btnCheckinQr">Qr Code</string>
+    <string name="btnCheckinFace">Facebook</string>
+    <string name="btnJogar">Jogar</string>
+    <string name="btnFeedback">Feedback</string>
+    <string name="btnCompartilhar">Compartilhar</string>
+    <string name="btnEnviar">Enviar</string>
+    <string name="btnIniciar">Jogar</string>
+
+    <string name="tvPerguntas">Perguntas e Respostas</string>
+
+    <string name="campoComentario">Comentário</string>
+</resources>
