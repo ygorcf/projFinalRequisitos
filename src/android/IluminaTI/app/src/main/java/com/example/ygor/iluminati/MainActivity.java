@@ -16,10 +16,24 @@ public class MainActivity extends Activity {
         ButterKnife.bind(this);
     }
 
-    @OnClick(R.id.btnCheckin)
-    public void checkin() {
+    private void openCronograma() {
+        Intent i = new Intent(this, CronogramaActivity.class);
+        startActivityForResult(i, 100);
+    }
+
+    private void openEvento() {
         Intent i = new Intent(this, EventoActivity.class);
         startActivityForResult(i, 100);
+    }
+
+    @OnClick(R.id.btnCheckin)
+    public void onCheckin() {
+        openEvento();
+    }
+
+    @OnClick(R.id.btnCronograma)
+    public void onCronograma() {
+        openCronograma();
     }
 
 }
