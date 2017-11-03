@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -12,10 +13,12 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class JogoActivity extends Activity {
+public class JogoActivity extends Activity implements View.OnClickListener {
 
     @BindView(R.id.tvContagem)
     TextView tvContagem;
+    @BindView(R.id.btnIniciar)
+    Button btnIniciar;
 
     private CountDownTimer contador;
 
@@ -24,6 +27,7 @@ public class JogoActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_jogo);
         ButterKnife.bind(this);
+        btnIniciar.setOnClickListener(this);
     }
 
     private void atualizaContagem(long segundosFaltando) {
@@ -49,15 +53,11 @@ public class JogoActivity extends Activity {
         }.start();
     }
 
-    @OnClick(R.id.btnIniciar)
-    public void onIniciar() {
-        starCount();
-    }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
+        btnIniciar.setOnClickListener(null);
         if (requestCode == 100) {
             switch (resultCode) {
                 case 100:
@@ -69,5 +69,11 @@ public class JogoActivity extends Activity {
             }
         }
 
+    }
+
+    @Override
+    public void onClick(View v) {
+        btnIniciar.setOnClickListener(null);
+        starCount();
     }
 }
