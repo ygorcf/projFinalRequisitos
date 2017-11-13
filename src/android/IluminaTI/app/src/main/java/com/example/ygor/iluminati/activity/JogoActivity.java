@@ -1,4 +1,4 @@
-package com.example.ygor.iluminati;
+package com.example.ygor.iluminati.activity;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -8,6 +8,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.example.ygor.iluminati.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

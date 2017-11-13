@@ -1,8 +1,10 @@
-package com.example.ygor.iluminati;
+package com.example.ygor.iluminati.activity;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+
+import com.example.ygor.iluminati.R;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
