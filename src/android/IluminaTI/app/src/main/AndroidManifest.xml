@@ -8,18 +8,20 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity" />
-        <activity android:name=".EventoActivity" />
-        <activity android:name=".FeedbackActivity" />
-        <activity android:name=".JogoActivity" />
-        <activity android:name=".CronogramaActivity" />
-        <activity android:name=".PerguntasActivity" />
-        <activity android:name=".LoginActivity">
+        <activity android:name=".activity.MainActivity" />
+        <activity android:name=".activity.EventoActivity" />
+        <activity android:name=".activity.FeedbackActivity" />
+        <activity android:name=".activity.JogoActivity" />
+        <activity android:name=".activity.CronogramaActivity" />
+        <activity android:name=".activity.PerguntasActivity" />
+        <activity android:name=".activity.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
     </application>
+
+    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
 
 </manifest>

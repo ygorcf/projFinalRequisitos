@@ -1,10 +1,12 @@
-package com.example.ygor.iluminati;
+package com.example.ygor.iluminati.activity;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.example.ygor.iluminati.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
