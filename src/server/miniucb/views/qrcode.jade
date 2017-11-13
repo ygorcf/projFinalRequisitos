@@ -1,0 +1,9 @@
+extends layout
+
+block content
+  p #{url}
+
+  canvas(id="canvasQr")
+
+  script(src="/javascripts/qrcode.min.js")
+  script(src="/javascripts/qrcode.js")

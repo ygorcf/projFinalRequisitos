@@ -46,4 +46,10 @@ router.get('/qrcode/:idPalestra/:matricula', function(req, res, next) {
   }
 })
 
+/* GET generates qr code. */
+router.get('/qrcode/:idPalestra', function(req, res, next) {
+  var idPalestra = req.params.idPalestra
+  res.render('qrcode', { url: req.protocol + '://' + req.host + ":" + req.app.settings.port + req.baseUrl + req.url });
+})
+
 module.exports = router;
