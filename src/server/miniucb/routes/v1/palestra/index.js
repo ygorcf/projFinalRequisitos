@@ -9,6 +9,11 @@ router.get('/', function(req, res, next) {
   res.status(200).json(responseHelper(true, 200, palestras))
 })
 
+/* GET search palestra. */
+router.get('/:id', function(req, res, next) {
+  res.status(200).json(responseHelper(true, 200, palestras[req.params.id]))
+})
+
 /* POST add palestra. */
 router.post('/', function(req, res, next) {
   var novaPalestra = req.body
@@ -21,7 +26,7 @@ router.post('/', function(req, res, next) {
     palestras.push(novaPalestra)
     res.status(200).json(responseHelper(true, 200, novaPalestra))
   } else {
-    res.status(404).json(responseHelper(true, 404, {
+    res.status(401).json(responseHelper(true, 401, {
       message: "Nova palestra invalida."
     }))
   }
@@ -39,7 +44,7 @@ router.get('/qrcode/:idPalestra/:matricula', function(req, res, next) {
       palestra: palestra
     }))
   } else {
-    res.status(401).json(responseHelper(true, 404, {
+    res.status(401).json(responseHelper(true, 401, {
       checkin: false, 
       message: "Id da Palestra '" + idPalestra + "' não existe."
     }))
@@ -53,6 +58,25 @@ router.get('/qrcode/:idPalestra', function(req, res, next) {
     urlCompleta: req.protocol + '://' + req.host + ":" + req.app.settings.port + req.baseUrl + req.url,
     url: req.url
   });
+})
+
+/* GET search palestra feedbacks. */
+router.get('/:idPalestra/feedback', function(req, res, next) {
+  res.status(200).json(responseHelper(true, 200, palestras[req.params.idPalestra].feedbacks))
+})
+
+/* POST add palestra. */
+router.post('/:idPalestra/feedback', function(req, res, next) {
+  var novoFeedback = req.body
+  if (typeof novoFeedback.matricula === 'string' && novoFeedback.matricula.length > 0 &&
+      typeof novoFeedback.comentario === 'string' && novoFeedback.comentario.length > 0) {
+    palestras[req.params.idPalestra].feedbacks.push(novoFeedback)
+    res.status(200).json(responseHelper(true, 200, palestras[req.params.idPalestra].feedbacks))
+  } else {
+    res.status(401).json(responseHelper(true, 401, {
+      message: "Novo feedback invalido."
+    }))
+  }
 })
 
 module.exports = router;
