@@ -48,6 +48,18 @@ public abstract class BaseTask<K, T> extends AsyncTask<K, Void, Response<T>> {
         progressDialog.dismiss();
     }
 
+    @Override
+    protected Response<T> doInBackground(K... params) {
+        try {
+            return doTask(params);
+        } catch (Exception e) {
+            exception = e;
+            return null;
+        }
+    }
+
+    protected abstract Response<T> doTask(K... params) throws Exception;
+
     public interface CompleteListener<T> {
 
         void onComplete(T result);

@@ -12,6 +12,7 @@ public class PalestraResponse {
     private String horario;
     private Long dia;
     private List<String> alunosCheckin;
+    private List<FeedbackResponse.FeedbackObjectResponse> feedbacks;
 
     public String getNome() {
         return nome;
@@ -45,4 +46,11 @@ public class PalestraResponse {
         this.alunosCheckin = alunosCheckin;
     }
 
+    public List<FeedbackResponse.FeedbackObjectResponse> getFeedbacks() {
+        return feedbacks;
+    }
+
+    public void setFeedbacks(List<FeedbackResponse.FeedbackObjectResponse> feedbacks) {
+        this.feedbacks = feedbacks;
+    }
 }

@@ -31,15 +31,10 @@ public class GetCronogramaTask extends BaseTask<String, CronogramaResponse> {
     }
 
     @Override
-    protected Response<CronogramaResponse> doInBackground(String... params) {
-        try {
-            UcbServer ucbServer = RetrofitHelper.getUcbServer();
-            Call<CronogramaResponse> ret = ucbServer.getPalestras();
-            return ret.execute();
-        } catch (Exception e) {
-            exception = e;
-            return null;
-        }
+    protected Response<CronogramaResponse> doTask(String... params) throws Exception {
+        UcbServer ucbServer = RetrofitHelper.getUcbServer();
+        Call<CronogramaResponse> ret = ucbServer.getPalestras();
+        return ret.execute();
     }
 
 }

@@ -24,7 +24,8 @@ import retrofit2.Response;
 
 public class MainActivity extends Activity implements BaseTask.CompleteListener<CheckInResponse> {
 
-    Usuario usuario;
+    private Usuario usuario;
+    private int idPalestra;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +44,7 @@ public class MainActivity extends Activity implements BaseTask.CompleteListener<
     private void openEvento() {
         Intent i = new Intent(this, EventoActivity.class);
         i.putExtra("usuario", usuario);
+        i.putExtra("idPalestra", idPalestra);
         startActivityForResult(i, 100);
     }
 
@@ -73,8 +75,9 @@ public class MainActivity extends Activity implements BaseTask.CompleteListener<
                 try {
                     String urlQr = result.getContents();
                     String resultQr = (urlQr.contains("qrcode/")) ? urlQr.substring((((urlQr.indexOf(0) == '/') ? "/" : "") + "qrcode/").length() + 1) : null;
+                    idPalestra = Integer.parseInt(resultQr);
                     CheckInPalestraTask task = new CheckInPalestraTask(this, this);
-                    CheckInPalestraTask.CheckinParams params = CheckInPalestraTask.getParams(Integer.parseInt(resultQr), usuario.getMatricula());
+                    CheckInPalestraTask.CheckinParams params = CheckInPalestraTask.getParams(idPalestra, usuario.getMatricula());
                     task.execute(params);
                 } catch (Exception e) {
                     Toast.makeText(this, "Ocorreu um erro ao realizar o checkin.", Toast.LENGTH_LONG).show();

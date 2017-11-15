@@ -52,11 +52,17 @@ public class LoginActivity extends Activity {
 
         usuarios = uBd.listar();
         if (usuarios.size() == 0) {
-            usuario = new Usuario();
-            usuario.setMatricula(campoMatricula.getText().toString());
-            usuario.setSenha(campoSenha.getText().toString());
-            usuario.setServidor(campoServidor.getText().toString());
-            uBd.salvar(usuario);
+            if (campoMatricula.getText().length() > 0 &&
+                    campoSenha.getText().length() > 0 &&
+                    campoServidor.getText().length() > 0) {
+                usuario = new Usuario();
+                usuario.setMatricula(campoMatricula.getText().toString());
+                usuario.setSenha(campoSenha.getText().toString());
+                usuario.setServidor(campoServidor.getText().toString());
+                uBd.salvar(usuario);
+            } else {
+                return false;
+            }
         } else {
             usuario = usuarios.get(0);
         }
@@ -82,10 +88,8 @@ public class LoginActivity extends Activity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == 100) {
-            if (requestCode == 100) {
-                new UsuarioDAO(database).deletarTodos();
-            }
+        if (requestCode == 100) {
+            new UsuarioDAO(database).deletarTodos();
         }
     }
 }
