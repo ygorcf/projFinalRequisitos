@@ -6,12 +6,12 @@ var router = express.Router();
 
 /* GET list palestras. */
 router.get('/', function(req, res, next) {
-  res.status(200).json(responseHelper(true, 200, palestras))
+  res.status(200).json(responseHelper(true, 200, "Listado palestras com sucesso.", palestras))
 })
 
 /* GET search palestra. */
 router.get('/:id', function(req, res, next) {
-  res.status(200).json(responseHelper(true, 200, palestras[req.params.id]))
+  res.status(200).json(responseHelper(true, 200, "Pesquisado palestra com sucesso.", palestras[req.params.id]))
 })
 
 /* POST add palestra. */
@@ -24,11 +24,9 @@ router.post('/', function(req, res, next) {
       novaPalestra.alunosCheckin = []
     }
     palestras.push(novaPalestra)
-    res.status(200).json(responseHelper(true, 200, novaPalestra))
+    res.status(200).json(responseHelper(true, 200, "Adicionada palestra com sucesso.", novaPalestra))
   } else {
-    res.status(401).json(responseHelper(true, 401, {
-      message: "Nova palestra invalida."
-    }))
+    res.status(401).json(responseHelper(true, 401, "Nova palestra invalida.", null))
   }
 })
 
@@ -38,16 +36,13 @@ router.get('/qrcode/:idPalestra/:matricula', function(req, res, next) {
   var palestra = palestras[idPalestra]
   if (palestra !== null && palestra !== undefined) {
     palestra.alunosCheckin.push(req.params.matricula)
-    res.status(200).json(responseHelper(true, 200, {
+    res.status(200).json(responseHelper(true, 200, "Autenticado com sucesso.", {
       checkin: true, 
       message: "Aluno '" + req.params.matricula + "' autenticado com sucesso na palestra '" + idPalestra + "'.",
       palestra: palestra
     }))
   } else {
-    res.status(401).json(responseHelper(true, 401, {
-      checkin: false, 
-      message: "Id da Palestra '" + idPalestra + "' não existe."
-    }))
+    res.status(401).json(responseHelper(true, 401, "Id da Palestra '" + idPalestra + "' não existe.", null))
   }
 })
 
@@ -62,7 +57,11 @@ router.get('/qrcode/:idPalestra', function(req, res, next) {
 
 /* GET search palestra feedbacks. */
 router.get('/:idPalestra/feedback', function(req, res, next) {
-  res.status(200).json(responseHelper(true, 200, palestras[req.params.idPalestra].feedbacks))
+  try {
+    res.status(200).json(responseHelper(true, 200, "Pesquisado feedbacks com sucesso.", palestras[req.params.idPalestra].feedbacks))
+  } catch(e) {
+    res.status(501).json(responseHelper(true, 401, "Ocorreu um erro ao pesquisar o feedback.", null))
+  }
 })
 
 /* POST add palestra. */
@@ -71,11 +70,9 @@ router.post('/:idPalestra/feedback', function(req, res, next) {
   if (typeof novoFeedback.matricula === 'string' && novoFeedback.matricula.length > 0 &&
       typeof novoFeedback.comentario === 'string' && novoFeedback.comentario.length > 0) {
     palestras[req.params.idPalestra].feedbacks.push(novoFeedback)
-    res.status(200).json(responseHelper(true, 200, palestras[req.params.idPalestra].feedbacks))
+    res.status(200).json(responseHelper(true, 200, "Adicionado feedback com sucesso.", palestras[req.params.idPalestra].feedbacks))
   } else {
-    res.status(401).json(responseHelper(true, 401, {
-      message: "Novo feedback invalido."
-    }))
+    res.status(401).json(responseHelper(true, 401, "Novo feedback invalido.", null))
   }
 })
 

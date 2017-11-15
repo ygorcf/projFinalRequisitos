@@ -17,15 +17,10 @@ public class CheckInPalestraTask extends BaseTask<CheckInPalestraTask.CheckinPar
     }
 
     @Override
-    protected Response<CheckInResponse> doInBackground(CheckInPalestraTask.CheckinParams... params) {
-        try {
-            UcbServer ucbServer = RetrofitHelper.getUcbServer();
-            Call<CheckInResponse> ret = ucbServer.checkInQrCode(params[0].idPalestra, params[0].matricula);
-            return ret.execute();
-        } catch (Exception e) {
-            exception = e;
-            return null;
-        }
+    protected Response<CheckInResponse> doTask(CheckinParams... params) throws Exception {
+        UcbServer ucbServer = RetrofitHelper.getUcbServer();
+        Call<CheckInResponse> ret = ucbServer.checkInQrCode(params[0].idPalestra, params[0].matricula);
+        return ret.execute();
     }
 
     public static CheckinParams getParams(int idPalestra, String matricula) {

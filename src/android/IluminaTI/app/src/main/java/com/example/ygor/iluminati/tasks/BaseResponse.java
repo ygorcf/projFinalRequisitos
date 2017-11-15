@@ -10,6 +10,7 @@ public abstract class BaseResponse<T> {
 
     private boolean success;
     private int status;
+    private String message;
     private T data;
 
     public boolean isSuccess() {
@@ -26,6 +27,14 @@ public abstract class BaseResponse<T> {
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 
     public T getData() {
