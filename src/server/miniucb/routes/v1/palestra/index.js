@@ -39,11 +39,20 @@ router.get('/qrcode/:idPalestra/:matricula', function(req, res, next) {
       palestra: palestra
     }))
   } else {
-    res.status(404).json(responseHelper(true, 404, {
+    res.status(401).json(responseHelper(true, 404, {
       checkin: false, 
       message: "Id da Palestra '" + idPalestra + "' não existe."
     }))
   }
+})
+
+/* GET generates qr code. */
+router.get('/qrcode/:idPalestra', function(req, res, next) {
+  var idPalestra = req.params.idPalestra
+  res.render('qrcode', { 
+    urlCompleta: req.protocol + '://' + req.host + ":" + req.app.settings.port + req.baseUrl + req.url,
+    url: req.url
+  });
 })
 
 module.exports = router;

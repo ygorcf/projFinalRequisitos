@@ -15,6 +15,7 @@ import com.example.ygor.iluminati.tasks.BaseTask;
 import com.example.ygor.iluminati.tasks.CompleteListener;
 import com.example.ygor.iluminati.tasks.CronogramaResponse;
 import com.example.ygor.iluminati.tasks.GetCronogramaTask;
+import com.example.ygor.iluminati.tasks.PalestraResponse;
 import com.example.ygor.iluminati.tasks.UcbServer;
 import com.example.ygor.iluminati.util.ISO8601DateParser;
 import com.example.ygor.iluminati.util.Network;
@@ -38,7 +39,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class CronogramaActivity extends Activity implements CalendarPickerView.OnDateSelectedListener, CompleteListener<CronogramaResponse> {
+public class CronogramaActivity extends Activity implements CalendarPickerView.OnDateSelectedListener, BaseTask.CompleteListener<CronogramaResponse> {
 
     @BindView(R.id.calendar)
     CalendarPickerView calendario;
@@ -103,7 +104,7 @@ public class CronogramaActivity extends Activity implements CalendarPickerView.O
             Palestra p;
             Date maiorData = null;
             try {
-                for (CronogramaResponse.CronogramaPalestraResponse palestra : result.getData()) {
+                for (PalestraResponse palestra : result.getData()) {
                     p = new Palestra();
                     p.setData(new Date(palestra.getDia()));
                     p.setNome(palestra.getNome());
@@ -126,5 +127,12 @@ public class CronogramaActivity extends Activity implements CalendarPickerView.O
             Toast.makeText(this, "Falha ao obter os dados do cronograma. Tente novamente.", Toast.LENGTH_SHORT).show();
             finish();
         }
+    }
+
+    @Override
+    public void onError(Exception e, Response<CronogramaResponse> result) {
+        Toast.makeText(this, "Falha ao obter os dados do cronograma. Tente novamente.", Toast.LENGTH_SHORT).show();
+        Log.e(this.getClass().getName(), e.getMessage());
+        finish();
     }
 }
