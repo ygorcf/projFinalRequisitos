@@ -1,4 +1,4 @@
-QRCode.toCanvas(document.getElementById('canvasQr'), 'sample text', function (error) {
+QRCode.toCanvas(document.getElementById('canvasQr'), urlQrCode, function (error) {
   if (error) console.error(error)
   console.log('success!');
 })
