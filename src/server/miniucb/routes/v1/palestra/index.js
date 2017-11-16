@@ -13,10 +13,13 @@ router.get('/', function(req, res, next) {
 router.post('/', function(req, res, next) {
   var novaPalestra = req.body
   if (typeof novaPalestra.nome === 'string' && novaPalestra.nome.length > 0 &&
-      typeof novaPalestra.horario === 'string' && novaPalestra.horario.match(/[0-9]{2}:[0-9]{2}/) &&
-      novaPalestra.horario instanceof Date) {
+      typeof novaPalestra.horario === 'string' && novaPalestra.horario.match(/[0-9]{2}:[0-9]{2}/) !== null &&
+      (novaPalestra.dia instanceof Date || (typeof novaPalestra.dia === 'string' && novaPalestra.dia.match(/[0-9]{4}-[0-9]{2}-[0-9]{2}/) !== null))) {
     if (!(novaPalestra.alunosCheckin instanceof Array)) {
       novaPalestra.alunosCheckin = []
+    }
+    if (!(novaPalestra.perguntas instanceof Array)) {
+      novaPalestra.perguntas = []
     }
     palestras.push(novaPalestra)
     res.status(200).json(responseHelper(true, 200, novaPalestra))
