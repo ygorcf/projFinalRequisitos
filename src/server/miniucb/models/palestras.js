@@ -15,6 +15,7 @@ var palestras = [
 	perguntas: [
 	  {
 	    pergunta: 'O \'Firewall\' é uma parede de fogo?',
+		valor: 100,
 		respostas: [
 		  {
 		    resposta: 'Sim',
@@ -25,7 +26,8 @@ var palestras = [
 			correta: true
 		  }
 		]
-	]
+	],
+	ranking: []
   },
   {
     nome: 'Papo de banco de dados',
@@ -36,6 +38,7 @@ var palestras = [
 	perguntas: [
 	  {
 		pergunta: 'O comando \'INSERT\' é de que tipo:',
+		valor: 30,
 		respostas: [
 		  {
 		    resposta: 'DDL',
@@ -61,6 +64,7 @@ var palestras = [
 	  },
 	  {
 		pergunta: 'O que o comando \'COMMIT\' faz:',
+		valor: 45,
 		respostas: [
 		  {
 		    resposta: 'Come',
@@ -82,6 +86,7 @@ var palestras = [
 	  },
 	  {
 		pergunta: 'O comando \'CREATE\' é de que tipo:',
+		valor: 25,
 		respostas: [
 		  {
 		    resposta: 'DDL',
@@ -97,7 +102,8 @@ var palestras = [
 		  }
 		]
 	  }
-	]
+	],
+	ranking: []
   }
 ]
 
