@@ -18,10 +18,13 @@ router.get('/:id', function(req, res, next) {
 router.post('/', function(req, res, next) {
   var novaPalestra = req.body
   if (typeof novaPalestra.nome === 'string' && novaPalestra.nome.length > 0 &&
-      typeof novaPalestra.horario === 'string' && novaPalestra.horario.match(/[0-9]{2}:[0-9]{2}/) &&
-      novaPalestra.horario instanceof Date) {
+      typeof novaPalestra.horario === 'string' && novaPalestra.horario.match(/[0-9]{2}:[0-9]{2}/) !== null &&
+      (novaPalestra.dia instanceof Date || (typeof novaPalestra.dia === 'string' && novaPalestra.dia.match(/[0-9]{4}-[0-9]{2}-[0-9]{2}/) !== null))) {
     if (!(novaPalestra.alunosCheckin instanceof Array)) {
       novaPalestra.alunosCheckin = []
+    }
+    if (!(novaPalestra.perguntas instanceof Array)) {
+      novaPalestra.perguntas = []
     }
     palestras.push(novaPalestra)
     res.status(200).json(responseHelper(true, 200, "Adicionada palestra com sucesso.", novaPalestra))
@@ -64,7 +67,7 @@ router.get('/:idPalestra/feedback', function(req, res, next) {
   }
 })
 
-/* POST add palestra. */
+/* POST add palestra feedback. */
 router.post('/:idPalestra/feedback', function(req, res, next) {
   var novoFeedback = req.body
   if (typeof novoFeedback.matricula === 'string' && novoFeedback.matricula.length > 0 &&
@@ -73,6 +76,43 @@ router.post('/:idPalestra/feedback', function(req, res, next) {
     res.status(200).json(responseHelper(true, 200, "Adicionado feedback com sucesso.", palestras[req.params.idPalestra].feedbacks))
   } else {
     res.status(401).json(responseHelper(true, 401, "Novo feedback invalido.", null))
+  }
+})
+
+/* GET search perguntas jogo. */
+router.get('/:idPalestra/jogo', function(req, res, next) {
+  try {
+    res.status(200).json(responseHelper(true, 200, "Pesquisado jogo com sucesso.", palestras[req.params.idPalestra].perguntas))
+  } catch(e) {
+    res.status(501).json(responseHelper(true, 401, "Ocorreu um erro ao pesquisar o jogo.", null))
+  }
+})
+
+/* POST save respostas jogo. */
+router.post('/:idPalestra/jogo/responder', function(req, res, next) {
+  try {
+	var novasRespostas = req.body
+	if (typeof novasRespostas.matricula === 'string' &&
+		novasRespostas.respostas instanceof Array) {
+		var pontuacao = 0
+		novasRespostas.respostas.forEach((v, i) => {
+		  if (palestras[req.params.idPalestra].perguntas[i].respostas[v].correta)
+		    pontuacao += palestras[req.params.idPalestra].perguntas[i].valor
+		})
+		palestras[req.params.idPalestra].ranking.push({matricula: novasRespostas.matricula, pontuacao: pontuacao})
+		res.status(200).json(responseHelper(true, 200, "Adicionadas respostas com sucesso.", { respostas: novasRespostas, pontuacao: pontuacao }))
+	}
+  } catch(e) {
+    res.status(501).json(responseHelper(true, 401, "Ocorreu um erro ao salvar respostas do jogo.", null))
+  }
+})
+
+/* GET search ranking jogo. */
+router.get('/:idPalestra/jogo/ranking', function(req, res, next) {
+  try {
+    res.status(200).json(responseHelper(true, 200, "Pesquisado ranking com sucesso.", palestras[req.params.idPalestra].ranking))
+  } catch(e) {
+    res.status(501).json(responseHelper(true, 401, "Ocorreu um erro ao pesquisar o ranking.", null))
   }
 })
 
