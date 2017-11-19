@@ -1,6 +1,4 @@
-package com.example.ygor.iluminati.tasks;
-
-import java.util.List;
+package com.example.ygor.iluminati.network.responses;
 
 /**
  * Created by Ygor on 14/11/2017.

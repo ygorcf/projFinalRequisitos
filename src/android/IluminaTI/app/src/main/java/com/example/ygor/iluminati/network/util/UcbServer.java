@@ -1,4 +1,9 @@
-package com.example.ygor.iluminati.tasks;
+package com.example.ygor.iluminati.network.util;
+
+import com.example.ygor.iluminati.network.responses.CheckInResponse;
+import com.example.ygor.iluminati.network.responses.CronogramaResponse;
+import com.example.ygor.iluminati.network.responses.FeedbackResponse;
+import com.example.ygor.iluminati.network.responses.PerguntasResponse;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -20,5 +25,8 @@ public interface UcbServer {
 
     @POST("palestra/{idPalestra}/feedback")
     Call<FeedbackResponse> sendFeedback(@Path("idPalestra") int idPalestra, @Body FeedbackResponse.FeedbackObjectResponse feedbackObject);
+
+    @GET("palestra/{idPalestra}/jogo")
+    Call<PerguntasResponse> getPerguntasJogo(@Path("idPalestra") int idPalestra);
 
 }

@@ -1,4 +1,4 @@
-package com.example.ygor.iluminati.tasks;
+package com.example.ygor.iluminati.network.responses;
 
 /**
  * Created by Ygor on 15/11/2017.

@@ -49,6 +49,7 @@ public class EventoActivity extends Activity {
     private void openJogar() {
         Intent i = new Intent(this, JogoActivity.class);
         i.putExtra("usuario", usuario);
+        i.putExtra("idPalestra", idPalestra);
         startActivityForResult(i, 100);
     }
 

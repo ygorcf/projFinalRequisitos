@@ -1,6 +1,4 @@
-package com.example.ygor.iluminati.tasks;
-
-import com.example.ygor.iluminati.model.Palestra;
+package com.example.ygor.iluminati.network.responses;
 
 import java.util.List;
 

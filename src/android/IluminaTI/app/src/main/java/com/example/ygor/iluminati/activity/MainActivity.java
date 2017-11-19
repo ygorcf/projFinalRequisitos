@@ -8,15 +8,13 @@ import android.widget.Toast;
 
 import com.example.ygor.iluminati.R;
 import com.example.ygor.iluminati.model.Usuario;
-import com.example.ygor.iluminati.tasks.BaseTask;
-import com.example.ygor.iluminati.tasks.CheckInPalestraTask;
-import com.example.ygor.iluminati.tasks.CheckInResponse;
-import com.example.ygor.iluminati.tasks.RetrofitHelper;
+import com.example.ygor.iluminati.network.task.BaseTask;
+import com.example.ygor.iluminati.network.task.CheckInPalestraTask;
+import com.example.ygor.iluminati.network.responses.CheckInResponse;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
 import java.io.IOException;
-import java.util.Arrays;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;

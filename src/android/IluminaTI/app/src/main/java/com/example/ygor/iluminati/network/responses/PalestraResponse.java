@@ -1,4 +1,4 @@
-package com.example.ygor.iluminati.tasks;
+package com.example.ygor.iluminati.network.responses;
 
 import java.util.List;
 

@@ -1,9 +1,6 @@
 package com.example.ygor.iluminati.activity;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
-import android.content.Context;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
@@ -11,22 +8,12 @@ import android.widget.Toast;
 
 import com.example.ygor.iluminati.R;
 import com.example.ygor.iluminati.model.Palestra;
-import com.example.ygor.iluminati.tasks.BaseTask;
-import com.example.ygor.iluminati.tasks.CompleteListener;
-import com.example.ygor.iluminati.tasks.CronogramaResponse;
-import com.example.ygor.iluminati.tasks.GetCronogramaTask;
-import com.example.ygor.iluminati.tasks.PalestraResponse;
-import com.example.ygor.iluminati.tasks.UcbServer;
-import com.example.ygor.iluminati.util.ISO8601DateParser;
-import com.example.ygor.iluminati.util.Network;
+import com.example.ygor.iluminati.network.task.BaseTask;
+import com.example.ygor.iluminati.network.responses.CronogramaResponse;
+import com.example.ygor.iluminati.network.task.GetCronogramaTask;
+import com.example.ygor.iluminati.network.responses.PalestraResponse;
 import com.squareup.timessquare.CalendarPickerView;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -34,10 +21,7 @@ import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import retrofit2.Call;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class CronogramaActivity extends Activity implements CalendarPickerView.OnDateSelectedListener, BaseTask.CompleteListener<CronogramaResponse> {
 

@@ -2,22 +2,24 @@ package com.example.ygor.iluminati.activity;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Patterns;
 import android.widget.EditText;
 
 import com.example.ygor.iluminati.R;
 import com.example.ygor.iluminati.dao.Database;
 import com.example.ygor.iluminati.dao.UsuarioDAO;
 import com.example.ygor.iluminati.model.Usuario;
-import com.example.ygor.iluminati.tasks.RetrofitHelper;
+import com.example.ygor.iluminati.network.util.RetrofitHelper;
+import com.example.ygor.iluminati.util.Preferencias;
 
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import retrofit2.Retrofit;
 
 public class LoginActivity extends Activity {
 
@@ -45,26 +47,25 @@ public class LoginActivity extends Activity {
     }
 
     private boolean checkLogin() {
-        UsuarioDAO uBd = new UsuarioDAO(database);
-        List<Usuario> usuarios = uBd.listar();
-        if (usuarios.size() > 1)
-            uBd.deletarTodos();
+        Matcher matcherIp = Patterns.IP_ADDRESS.matcher(campoServidor.getText().toString());
+        Matcher matcherDominio = Patterns.DOMAIN_NAME.matcher(campoServidor.getText().toString());
+        if (campoMatricula.getText().length() > 0 &&
+                campoSenha.getText().length() > 0 &&
+                (matcherIp.matches() || matcherDominio.matches())) {
+            usuario = new Usuario();
+            usuario.setMatricula(campoMatricula.getText().toString());
+            usuario.setSenha(campoSenha.getText().toString());
+            usuario.setServidor("http://" + campoServidor.getText().toString() + ":3000/api/v1/");
 
-        usuarios = uBd.listar();
-        if (usuarios.size() == 0) {
-            if (campoMatricula.getText().length() > 0 &&
-                    campoSenha.getText().length() > 0 &&
-                    campoServidor.getText().length() > 0) {
-                usuario = new Usuario();
-                usuario.setMatricula(campoMatricula.getText().toString());
-                usuario.setSenha(campoSenha.getText().toString());
-                usuario.setServidor(campoServidor.getText().toString());
-                uBd.salvar(usuario);
-            } else {
+            Preferencias preferencias = Preferencias.getPreferencias(this);
+            if (!preferencias.setIpServidor(usuario.getServidor()))
                 return false;
-            }
+            if (!preferencias.setMatricula(usuario.getMatricula()))
+                return false;
+            if (!preferencias.setSenha(usuario.getSenha()))
+                return false;
         } else {
-            usuario = usuarios.get(0);
+            return false;
         }
 
         RetrofitHelper.BASE_URL = usuario.getServidor();

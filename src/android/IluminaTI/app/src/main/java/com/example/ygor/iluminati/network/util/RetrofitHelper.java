@@ -1,4 +1,4 @@
-package com.example.ygor.iluminati.tasks;
+package com.example.ygor.iluminati.network.util;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
