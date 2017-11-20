@@ -7,6 +7,7 @@ import android.widget.Toast;
 
 import com.example.ygor.iluminati.R;
 import com.example.ygor.iluminati.model.Usuario;
+import com.example.ygor.iluminati.network.responses.RankingRespose;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -46,6 +47,13 @@ public class EventoActivity extends Activity {
         startActivityForResult(i, 100);
     }
 
+    private void openRanking() {
+        Intent i = new Intent(this, RankingActivity.class);
+        i.putExtra("usuario", usuario);
+        i.putExtra("idPalestra", idPalestra);
+        startActivityForResult(i, 100);
+    }
+
     private void openJogar() {
         Intent i = new Intent(this, JogoActivity.class);
         i.putExtra("usuario", usuario);
@@ -66,6 +74,11 @@ public class EventoActivity extends Activity {
     @OnClick(R.id.btnJogar)
     public void onJogar() {
         openJogar();
+    }
+
+    @OnClick(R.id.btnRanking)
+    public void onRanking() {
+        openRanking();
     }
 
 }

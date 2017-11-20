@@ -91,7 +91,10 @@ router.get('/:idPalestra/jogo', function(req, res, next) {
 /* POST save respostas jogo. */
 router.post('/:idPalestra/jogo/responder', function(req, res, next) {
   try {
-	var novasRespostas = req.body
+  var novasRespostas = req.body
+  console.log(JSON.stringify(novasRespostas))
+  console.log(typeof novasRespostas)
+  console.log(novasRespostas instanceof Array)
 	if (typeof novasRespostas.matricula === 'string' &&
 		novasRespostas.respostas instanceof Array) {
 		var pontuacao = 0
@@ -101,7 +104,9 @@ router.post('/:idPalestra/jogo/responder', function(req, res, next) {
 		})
 		palestras[req.params.idPalestra].ranking.push({matricula: novasRespostas.matricula, pontuacao: pontuacao})
 		res.status(200).json(responseHelper(true, 200, "Adicionadas respostas com sucesso.", { respostas: novasRespostas, pontuacao: pontuacao }))
-	}
+	} else {
+    res.status(200).json(responseHelper(true, 401, "Respostas invalidas.", null))
+  }
   } catch(e) {
     res.status(501).json(responseHelper(true, 401, "Ocorreu um erro ao salvar respostas do jogo.", null))
   }
