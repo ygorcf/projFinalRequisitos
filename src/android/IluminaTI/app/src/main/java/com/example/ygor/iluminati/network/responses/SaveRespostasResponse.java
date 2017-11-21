@@ -1,5 +1,7 @@
 package com.example.ygor.iluminati.network.responses;
 
+import com.example.ygor.iluminati.network.task.SaveRespostasTask;
+
 import java.util.List;
 
 /**
@@ -10,14 +12,14 @@ public class SaveRespostasResponse extends BaseResponse<SaveRespostasResponse.Pe
 
     public static class PerguntasResponse {
 
-        private List<Integer> respostas;
+        private List<SaveRespostasTask.SaveRespostasObjectRequest> respostas;
         private int pontuacao;
 
-        public List<Integer> getRespostas() {
+        public List<SaveRespostasTask.SaveRespostasObjectRequest> getRespostas() {
             return respostas;
         }
 
-        public void setRespostas(List<Integer> respostas) {
+        public void setRespostas(List<SaveRespostasTask.SaveRespostasObjectRequest> respostas) {
             this.respostas = respostas;
         }
 
