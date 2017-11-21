@@ -33,5 +33,6 @@ dependencies {
     compile 'com.google.code.gson:gson:2.8.1'
     compile 'com.journeyapps:zxing-android-embedded:3.5.0'
     compile 'com.android.support:appcompat-v7:25.1.0'
+    compile 'com.facebook.android:facebook-share:[4,5)'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
 }

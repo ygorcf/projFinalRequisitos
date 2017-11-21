@@ -3,5 +3,13 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
-    <color name="respostaSelected">#F00</color>
+
+    <color name="actionBar">#3399ff</color>
+    <color name="actionBarText">#FFF</color>
+    <color name="respostaSelected">#4da3ff</color>
+    <color name="buttonColor">#00cc66</color>
+    <color name="buttonBorder">#4ce600</color>
+    <color name="buttonText">#000</color>
+    <color name="activityBackground">#e6f2ff</color>
+
 </resources>

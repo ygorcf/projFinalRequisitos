@@ -23,7 +23,7 @@ public class NotificationHelper {
             // Recupera o serviço do NotificationManager
             NotificationManager manager = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
             NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
-            builder.setSmallIcon(R.drawable.notification);
+            builder.setSmallIcon(R.drawable.ic_date_range_white_24dp);
             builder.setTicker(mensagemBarraStatus);
             builder.setWhen(System.currentTimeMillis());
             builder.setContentTitle(titulo);
