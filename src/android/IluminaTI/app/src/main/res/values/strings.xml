@@ -18,7 +18,7 @@
     <string name="tvPerguntas">Perguntas e Respostas</string>
 
     <string name="campoComentario">Comentário</string>
-    <string name="campoServidor">Servidor</string>
+    <string name="campoServidor">Ip do Servidor</string>
     <string name="campoMatricula">Matricula</string>
     <string name="campoSenha">Senha</string>
 </resources>

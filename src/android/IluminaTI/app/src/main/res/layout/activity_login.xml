@@ -16,26 +16,35 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="text"
-        android:hint="@string/campoServidor" />
+        android:hint="@string/campoServidor"
+        android:layout_marginBottom="@dimen/fields_login_margin_bottom"/>
 
     <EditText
         android:id="@+id/campoMatricula"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/campoMatricula" />
+        android:hint="@string/campoMatricula"
+        android:layout_marginBottom="@dimen/fields_login_margin_bottom"/>
 
     <EditText
         android:id="@+id/campoSenha"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="textPassword"
-        android:hint="@string/campoSenha" />
+        android:hint="@string/campoSenha"
+        android:layout_marginBottom="@dimen/fields_login_margin_bottom"/>
 
     <Button
         android:id="@+id/btnLogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/btnEntrar"/>
+        android:text="@string/btnEntrar"
+        android:layout_marginBottom="@dimen/fields_login_margin_bottom"/>
+
+    <TextView
+        android:id="@+id/tvInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
 
 </LinearLayout>

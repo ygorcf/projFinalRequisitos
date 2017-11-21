@@ -31,16 +31,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
-        <ScrollView
+        <ListView
+            android:id="@+id/listaPalestras"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/tvDadosDia"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-
-        </ScrollView>
+            android:layout_height="wrap_content"></ListView>
 
 
     </LinearLayout>
