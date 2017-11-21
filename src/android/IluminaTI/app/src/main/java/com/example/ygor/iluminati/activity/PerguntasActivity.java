@@ -3,6 +3,7 @@ package com.example.ygor.iluminati.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -12,9 +13,12 @@ import com.example.ygor.iluminati.R;
 import com.example.ygor.iluminati.activity.adapter.RespostasJogoAdapter;
 import com.example.ygor.iluminati.model.Usuario;
 import com.example.ygor.iluminati.network.responses.PerguntasResponse;
+import com.example.ygor.iluminati.network.responses.SaveRespostasResponse;
 import com.example.ygor.iluminati.network.task.BaseTask;
 import com.example.ygor.iluminati.network.task.GetPerguntasJogoTask;
+import com.example.ygor.iluminati.network.task.SaveRespostasTask;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +27,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import retrofit2.Response;
 
-public class PerguntasActivity extends Activity implements RespostasJogoAdapter.OnItemClickListener {
+public class PerguntasActivity extends Activity implements RespostasJogoAdapter.OnItemClickListener, BaseTask.CompleteListener<SaveRespostasResponse> {
 
     @BindView(R.id.tvPergunta)
     TextView tvPergunta;
@@ -31,7 +35,7 @@ public class PerguntasActivity extends Activity implements RespostasJogoAdapter.
     ListView listaRespostas;
 
     private List<PerguntasResponse.PerguntaResponse> perguntas;
-    private List<PerguntasResponse.RespostaResponse> respostas;
+    private List<Integer> respostas;
     private PerguntasResponse.RespostaResponse respostaEscolhida;
     private int idPalestra;
     private Usuario usuario;
@@ -43,7 +47,7 @@ public class PerguntasActivity extends Activity implements RespostasJogoAdapter.
         setContentView(R.layout.activity_perguntas);
         ButterKnife.bind(this);
         perguntas = (List<PerguntasResponse.PerguntaResponse>) getIntent().getSerializableExtra("perguntas");
-        respostas = (List<PerguntasResponse.RespostaResponse>) getIntent().getSerializableExtra("respostas");
+        respostas = (List<Integer>) getIntent().getSerializableExtra("respostas");
         usuario = (Usuario) getIntent().getSerializableExtra("usuario");
         idPalestra = getIntent().getIntExtra("idPalestra", -1);
         indexPergunta = getIntent().getIntExtra("indexPergunta", -1);
@@ -70,19 +74,14 @@ public class PerguntasActivity extends Activity implements RespostasJogoAdapter.
         PerguntasResponse.PerguntaResponse pergunta = perguntas.get(indexPergunta);
         List<String> respostas = new ArrayList<>();
 
-
-        for (PerguntasResponse.RespostaResponse resposta : pergunta.getRespostas()) {
-            respostas.add(resposta.getResposta());
-        }
-
         RespostasJogoAdapter adapter = new RespostasJogoAdapter(this, pergunta.getRespostas(), this);
-//        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, respostas);
 
         tvPergunta.setText(pergunta.getPergunta());
         listaRespostas.setAdapter(adapter);
     }
 
     private void responder() {
+        respostas.add(perguntas.get(indexPergunta).getRespostas().indexOf(respostaEscolhida));
         if (indexPergunta + 1 >= perguntas.size()) {
             finishPerguntas();
         } else {
@@ -91,8 +90,8 @@ public class PerguntasActivity extends Activity implements RespostasJogoAdapter.
     }
 
     private void finishPerguntas() {
-        setResult(100);
-        finish();
+        SaveRespostasTask task = new SaveRespostasTask(this, this);
+        task.execute(new SaveRespostasTask.SaveRespostasRequest(new SaveRespostasTask.SaveRespostasObjectRequest(respostas, usuario.getMatricula()), idPalestra));
     }
 
     private void proxPergunta() {
@@ -122,5 +121,33 @@ public class PerguntasActivity extends Activity implements RespostasJogoAdapter.
     @Override
     public void onItemClick(PerguntasResponse.RespostaResponse resposta) {
         respostaEscolhida = resposta;
+    }
+
+    @Override
+    public void onComplete(SaveRespostasResponse result) {
+        setResult(100);
+        finish();
+    }
+
+    @Override
+    public void onError(Exception e, Response<SaveRespostasResponse> result) {
+        Toast.makeText(this, "Falha ao salvar as respostas do jogo..", Toast.LENGTH_LONG).show();
+        String msg = "";
+        if (e == null)
+            msg = "Erro desconhecido.";
+        else if (e.getMessage() == null) {
+            if (result == null)
+                msg = "Erro desconhecido.";
+            else
+                try {
+                    msg = result.errorBody().string();
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                    msg = "Erro desconhecido.";
+                }
+        } else
+            msg = e.getMessage();
+
+        Log.e(this.getClass().getName(), msg);
     }
 }

@@ -8,12 +8,7 @@
       "type": "node",
       "request": "launch",
       "name": "Launch Server",
-      "runtimeExecutable": "npm",
-      "runtimeArgs": [
-        "run-script",
-        "start"
-      ],
-      "port": 9229
+      "program": "${workspaceFolder}/bin/www"
     }
   ]
 }

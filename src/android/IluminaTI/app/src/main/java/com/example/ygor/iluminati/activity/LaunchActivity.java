@@ -19,13 +19,13 @@ public class LaunchActivity extends Activity {
     private void openMain() {
         Intent i = new Intent(this, MainActivity.class);
         i.putExtra("usuario", usuario);
-        startActivityForResult(i, 100);
+        startActivityForResult(i, 1);
     }
 
     private void openLogin() {
         Intent i = new Intent(this, LoginActivity.class);
         i.putExtra("usuario", usuario);
-        startActivityForResult(i, 100);
+        startActivityForResult(i, 2);
     }
 
     @Override
@@ -53,6 +53,9 @@ public class LaunchActivity extends Activity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        openLogin();
+        if (requestCode == 2)
+            finish();
+        else
+            openLogin();
     }
 }

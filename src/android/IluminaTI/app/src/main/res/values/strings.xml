@@ -12,6 +12,7 @@
     <string name="btnIniciar">Jogar</string>
     <string name="btnEntrar">Entrar</string>
     <string name="btnResponder">Responder</string>
+    <string name="btnRanking">Ranking</string>
 
     <string name="tvPerguntas">Perguntas e Respostas</string>
 

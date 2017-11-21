@@ -14,7 +14,7 @@ public class PerguntasResponse extends BaseResponse<List<PerguntasResponse.Pergu
         private String pergunta;
         private int valor;
         private List<RespostaResponse> respostas;
-        private List<RankingResponse> ranking;
+        private List<ItemRankingResponse> ranking;
 
         public String getPergunta() {
             return pergunta;
@@ -40,11 +40,11 @@ public class PerguntasResponse extends BaseResponse<List<PerguntasResponse.Pergu
             this.respostas = respostas;
         }
 
-        public List<RankingResponse> getRanking() {
+        public List<ItemRankingResponse> getRanking() {
             return ranking;
         }
 
-        public void setRanking(List<RankingResponse> ranking) {
+        public void setRanking(List<ItemRankingResponse> ranking) {
             this.ranking = ranking;
         }
     }
@@ -68,29 +68,6 @@ public class PerguntasResponse extends BaseResponse<List<PerguntasResponse.Pergu
 
         public void setCorreta(boolean correta) {
             this.correta = correta;
-        }
-
-    }
-
-    public class RankingResponse implements Serializable {
-
-        private String matricula;
-        private int pontuacao;
-
-        public String getMatricula() {
-            return matricula;
-        }
-
-        public void setMatricula(String matricula) {
-            this.matricula = matricula;
-        }
-
-        public int getPontuacao() {
-            return pontuacao;
-        }
-
-        public void setPontuacao(int pontuacao) {
-            this.pontuacao = pontuacao;
         }
 
     }
