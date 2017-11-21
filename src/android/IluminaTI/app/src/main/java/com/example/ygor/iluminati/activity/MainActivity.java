@@ -11,6 +11,7 @@ import com.example.ygor.iluminati.model.Usuario;
 import com.example.ygor.iluminati.network.task.BaseTask;
 import com.example.ygor.iluminati.network.task.CheckInPalestraTask;
 import com.example.ygor.iluminati.network.responses.CheckInResponse;
+import com.example.ygor.iluminati.util.NotificationHelper;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
