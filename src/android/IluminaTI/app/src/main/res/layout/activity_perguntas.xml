@@ -8,7 +8,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.ygor.iluminati.PerguntasActivity">
+    tools:context="com.example.ygor.iluminati.activity.PerguntasActivity">
 
     <TextView
         android:id="@+id/tvPergunta"
@@ -17,17 +17,12 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"/>
 
-    <ScrollView
+    <ListView
+        android:id="@+id/listaRespostas"
         android:layout_below="@id/tvPergunta"
         android:layout_above="@+id/btnResponder"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <ListView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"></ListView>
-
-    </ScrollView>
+        android:layout_height="wrap_content"></ListView>
 
     <Button
         android:id="@id/btnResponder"

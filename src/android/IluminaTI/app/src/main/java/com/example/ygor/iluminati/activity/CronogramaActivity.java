@@ -1,43 +1,33 @@
 package com.example.ygor.iluminati.activity;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
-import android.content.Context;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ygor.iluminati.R;
+import com.example.ygor.iluminati.activity.adapter.PalestrasAdapter;
 import com.example.ygor.iluminati.model.Palestra;
-import com.example.ygor.iluminati.tasks.BaseTask;
-import com.example.ygor.iluminati.tasks.CompleteListener;
-import com.example.ygor.iluminati.tasks.CronogramaResponse;
-import com.example.ygor.iluminati.tasks.GetCronogramaTask;
-import com.example.ygor.iluminati.tasks.PalestraResponse;
-import com.example.ygor.iluminati.tasks.UcbServer;
-import com.example.ygor.iluminati.util.ISO8601DateParser;
-import com.example.ygor.iluminati.util.Network;
+import com.example.ygor.iluminati.network.task.BaseTask;
+import com.example.ygor.iluminati.network.responses.CronogramaResponse;
+import com.example.ygor.iluminati.network.task.GetCronogramaTask;
+import com.example.ygor.iluminati.network.responses.PalestraResponse;
+import com.example.ygor.iluminati.util.NotificationHelper;
 import com.squareup.timessquare.CalendarPickerView;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import retrofit2.Call;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class CronogramaActivity extends Activity implements CalendarPickerView.OnDateSelectedListener, BaseTask.CompleteListener<CronogramaResponse> {
 
@@ -47,19 +37,26 @@ public class CronogramaActivity extends Activity implements CalendarPickerView.O
     @BindView(R.id.tvTituloDia)
     TextView tituloDia;
 
-    @BindView(R.id.tvDadosDia)
-    TextView dadosDia;
+    @BindView(R.id.listaPalestras)
+    ListView listaPalestras;
 
     SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-    ArrayList<Palestra> palestras = new ArrayList<>();
+    Map<String, List<Palestra>> palestras = null;
     Palestra palestraSelecionada = null;
+    PalestrasAdapter adapter = null;
+    List<Palestra> palestrasLista = null;
     CalendarPickerView.FluentInitializer calendarInitializer;
     boolean loaded = false;
+    boolean notify = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cronograma);
+        setTitle(getString(R.string.app_name) + " - Cronograma");
+
+        notify = getIntent().getBooleanExtra("notify", true);
+        palestras = new HashMap<>();
 
         GetCronogramaTask task = new GetCronogramaTask(this, this);
         task.execute("http://192.168.15.8:3000/api/v1/");
@@ -70,32 +67,37 @@ public class CronogramaActivity extends Activity implements CalendarPickerView.O
         Calendar maior = Calendar.getInstance();
         maior.add(Calendar.YEAR, 1);
 
+        palestrasLista = new ArrayList<>();
+
+        adapter = new PalestrasAdapter(this, palestrasLista);
+
+        listaPalestras.setAdapter(adapter);
 
         calendario.setOnDateSelectedListener(this);
         calendarInitializer = calendario.init(hoje.getTime(), maior.getTime());
         calendarInitializer.inMode(CalendarPickerView.SelectionMode.SINGLE);
         calendarInitializer.withSelectedDate(hoje.getTime());
+        tituloDia.setText("Dia " + dateFormat.format(hoje.getTime()));
     }
 
     @Override
     public void onDateSelected(Date date) {
+        tituloDia.setText("Dia " + dateFormat.format(date));
         if (loaded) {
-            tituloDia.setText(dateFormat.format(date));
-            for (Palestra p : palestras) {
-                if (dateFormat.format(p.getData()).equals(dateFormat.format(date))) {
-                    palestraSelecionada = p;
-                    String dados = "Palestra: " + p.getNome();
-                    dadosDia.setText(dados);
-                }
-            }
+            List<Palestra> palestrasDia = palestras.get(dateFormat.format(date));
+
+            palestrasLista.clear();
+            if (palestrasDia != null)
+                palestrasLista.addAll(palestrasDia);
+            adapter.notifyDataSetChanged();
+
         }
     }
 
     @Override
     public void onDateUnselected(Date date) {
         palestraSelecionada = null;
-        dadosDia.setText("");
-        tituloDia.setText("");
+        tituloDia.setText("Selecione um dia");
     }
 
     @Override
@@ -103,6 +105,8 @@ public class CronogramaActivity extends Activity implements CalendarPickerView.O
         if (result != null) {
             Palestra p;
             Date maiorData = null;
+            String dia;
+            StringBuilder strbNotificacao = new StringBuilder();
             try {
                 for (PalestraResponse palestra : result.getData()) {
                     p = new Palestra();
@@ -110,13 +114,52 @@ public class CronogramaActivity extends Activity implements CalendarPickerView.O
                     p.setNome(palestra.getNome());
                     p.setHorario(palestra.getHorario());
                     p.getAlunos().addAll(palestra.getAlunosCheckin());
-                    palestras.add(p);
+
+                    dia = dateFormat.format(p.getData());
+
+                    if (!palestras.containsKey(dia))
+                        palestras.put(dia, new ArrayList<Palestra>());
+
+                    palestras.get(dia).add(p);
+
+                    strbNotificacao.append(p.getNome())
+                            .append(" - ")
+                            .append(dateFormat.format(p.getData()))
+                            .append(" ")
+                            .append(p.getHorario())
+                            .append("\n");
 
                     if (maiorData == null || p.getData().after(maiorData)) {
                         maiorData = p.getData();
                     }
                     calendarInitializer.withHighlightedDate(p.getData());
                 }
+                String titulo = "IluminaTI - Evento";
+                String msg = "IluminaTI - " + result.getData().size() + " evento";
+                if (result.getData().size() > 1) {
+                    titulo += "s";
+                    msg += "s";
+                }
+
+                Calendar calendar = Calendar.getInstance();
+
+                if (notify)
+                    NotificationHelper.newNotification(this,
+                                                        titulo,
+                                                        titulo,
+                                                        msg,
+                                                        strbNotificacao,
+                                                        calendar.getTimeInMillis(),
+                                                        this.getClass());
+
+                Calendar hoje = Calendar.getInstance();
+                List<Palestra> palestrasDia = palestras.get(dateFormat.format(hoje.getTime()));
+
+                palestrasLista.clear();
+                if (palestrasDia != null)
+                    palestrasLista.addAll(palestrasDia);
+                adapter.notifyDataSetChanged();
+
                 loaded = true;
             } catch (Exception e) {
                 Toast.makeText(this, "Falha ao obter os dados do cronograma. Tente novamente.", Toast.LENGTH_SHORT).show();

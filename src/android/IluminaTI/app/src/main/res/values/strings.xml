@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">IluminaTI</string>
+    <string name="facebook_app_id">1234</string>
 
     <string name="btnCheckin">Check-in</string>
     <string name="btnCronograma">Cronograma</string>
@@ -12,11 +13,12 @@
     <string name="btnIniciar">Jogar</string>
     <string name="btnEntrar">Entrar</string>
     <string name="btnResponder">Responder</string>
+    <string name="btnRanking">Ranking</string>
 
     <string name="tvPerguntas">Perguntas e Respostas</string>
 
     <string name="campoComentario">Comentário</string>
-    <string name="campoServidor">Servidor</string>
+    <string name="campoServidor">Ip do Servidor</string>
     <string name="campoMatricula">Matricula</string>
     <string name="campoSenha">Senha</string>
 </resources>

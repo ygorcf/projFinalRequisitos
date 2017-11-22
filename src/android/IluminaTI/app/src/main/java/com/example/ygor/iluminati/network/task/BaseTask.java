@@ -1,21 +1,18 @@
-package com.example.ygor.iluminati.tasks;
+package com.example.ygor.iluminati.network.task;
 
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 
-import org.json.JSONObject;
+import com.example.ygor.iluminati.network.responses.BaseResponse;
 
-import retrofit2.Call;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by Ygor on 07/11/2017.
  */
 
-public abstract class BaseTask<K, T> extends AsyncTask<K, Void, Response<T>> {
+public abstract class BaseTask<K, T extends BaseResponse> extends AsyncTask<K, Void, Response<T>> {
 
     protected Context context;
     protected ProgressDialog progressDialog;

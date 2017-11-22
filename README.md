@@ -72,3 +72,4 @@ Com o servidor executando, as rotas estão disponiveis:
 * localhost:3000/api/v1/palestra/<id da palestra>/feedback -> Apresenta todos os feedbacks de uma palestra
   
 **Obs.: Como o foco do projeto é o aplicativo, o servidor é apenas uma API, logo os dados apresentados por ele estão em formato JSON, com excessão da pagina de gerar o QR code e as paginas '/' e '/api/v1' que listam as rotas que tem dentro delas para facilitar um pouco a navegação.**
+

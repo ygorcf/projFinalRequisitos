@@ -2,17 +2,15 @@ package com.example.ygor.iluminati.activity;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.ygor.iluminati.R;
 import com.example.ygor.iluminati.model.Usuario;
-import com.example.ygor.iluminati.tasks.BaseTask;
-import com.example.ygor.iluminati.tasks.FeedbackResponse;
-import com.example.ygor.iluminati.tasks.RetrofitHelper;
-import com.example.ygor.iluminati.tasks.SendFeedbackTask;
+import com.example.ygor.iluminati.network.task.BaseTask;
+import com.example.ygor.iluminati.network.responses.FeedbackResponse;
+import com.example.ygor.iluminati.network.task.SendFeedbackTask;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -32,6 +30,8 @@ public class FeedbackActivity extends Activity implements BaseTask.CompleteListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feedback);
         usuario = (Usuario) getIntent().getSerializableExtra("usuario");
+
+        setTitle(getString(R.string.app_name) + " - Enviar feedback");
         idPalestra = getIntent().getIntExtra("idPalestra", -1);
 
         if (idPalestra == -1) {

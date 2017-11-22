@@ -1,7 +1,10 @@
-package com.example.ygor.iluminati.tasks;
+package com.example.ygor.iluminati.network.task;
 
 import android.content.Context;
-import android.os.AsyncTask;
+
+import com.example.ygor.iluminati.network.responses.CheckInResponse;
+import com.example.ygor.iluminati.network.util.RetrofitHelper;
+import com.example.ygor.iluminati.network.util.UcbServer;
 
 import retrofit2.Call;
 import retrofit2.Response;

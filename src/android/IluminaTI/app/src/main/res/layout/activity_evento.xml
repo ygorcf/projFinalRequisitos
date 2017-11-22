@@ -8,25 +8,35 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.ygor.iluminati.EventoActivity"
+    tools:context="com.example.ygor.iluminati.activity.EventoActivity"
     android:orientation="vertical">
 
     <Button
         android:id="@+id/btnJogar"
         android:text="@string/btnJogar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/buttons_evento_margin_bottom"/>
+
+    <Button
+        android:id="@+id/btnRanking"
+        android:text="@string/btnRanking"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/buttons_evento_margin_bottom"/>
 
     <Button
         android:id="@+id/btnFeedback"
         android:text="@string/btnFeedback"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/buttons_evento_margin_bottom"/>
 
     <Button
         android:id="@+id/btnCompartilhar"
         android:text="@string/btnCompartilhar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/buttons_evento_margin_bottom"/>
 
 </LinearLayout>

@@ -1,24 +1,13 @@
-package com.example.ygor.iluminati.tasks;
+package com.example.ygor.iluminati.network.task;
 
-import android.app.ProgressDialog;
 import android.content.Context;
-import android.os.AsyncTask;
-import android.util.Log;
-import android.widget.BaseAdapter;
 
-import com.example.ygor.iluminati.activity.CronogramaActivity;
-import com.example.ygor.iluminati.util.Network;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.json.JSONStringer;
-
-import java.io.IOException;
+import com.example.ygor.iluminati.network.responses.CronogramaResponse;
+import com.example.ygor.iluminati.network.util.RetrofitHelper;
+import com.example.ygor.iluminati.network.util.UcbServer;
 
 import retrofit2.Call;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by Ygor on 07/11/2017.
