@@ -52,9 +52,24 @@ Com o repositório aberto:
 
 ## Servidor
 
+Baixar o Node:
+1. Abra o link: [Download Node](https://nodejs.org/en/).
+2. Selecione a versão LTS.
+3. Execute o arquivo que foi baixado.
+4. A instalação é só apertar em "next" até aparecer o botão de "instalar", então clique em "instalar".
+
 ### Como executar:
 
 1. Abra o CMD(Prompt de comando).
 2. Abra a pasta onde foi feito o download do projeto e escolha a pasta "miniucb", que está em "src" > "server".
 3. Execute o comando "npm install".
 4. Execute o comando "npm run start".
+
+Com o servidor executando, as rotas estão disponiveis:
+* localhost:3000/api/v1/palestra/ -> Apresenta todas as palestras
+* localhost:3000/api/v1/palestra/<id da palestra> -> Apresenta uma palestra
+* localhost:3000/api/v1/palestra/qrcode/<id da palestra> -> Gera o QR Code para fazer o checkin no app
+* localhost:3000/api/v1/palestra/<id da palestra>/feedback -> Apresenta todos os feedbacks de uma palestra
+  
+**Obs.: Como o foco do projeto é o aplicativo, o servidor é apenas uma API, logo os dados apresentados por ele estão em formato JSON, com excessão da pagina de gerar o QR code e as paginas '/' e '/api/v1' que listam as rotas que tem dentro delas para facilitar um pouco a navegação.**
+

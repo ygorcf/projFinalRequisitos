@@ -8,4 +8,13 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Express' });
 }); */
 
+/* GET generates list routes. */
+router.get('/', function(req, res, next) {
+  res.render('routes', { 
+    routes: [
+      [{path: req.originalUrl + 'api/v1', method: {get: true}}]
+    ]
+  });
+})
+
 module.exports = router;

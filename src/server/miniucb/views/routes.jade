@@ -1,0 +1,16 @@
+extends layout
+
+block content
+  - var rotas = routes
+  each rota in rotas
+    p
+      ul
+      each url in rota
+        li
+          - var url_path = url.path
+          - var url_meth = []
+          - for (var i in url.method) {
+          -   if (url.method[i] == true) url_meth.push(i)
+          - }
+          - url_meth = url_meth.join(', ')
+          a(href=url_path)= url_path + ' - (' + url_meth + ')'
