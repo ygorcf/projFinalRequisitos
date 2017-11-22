@@ -35,6 +35,7 @@ public class RankingActivity extends Activity implements BaseTask.CompleteListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ranking);
+        setTitle(getString(R.string.app_name) + " - Ranking do jogo");
         ButterKnife.bind(this);
         usuario = (Usuario) getIntent().getSerializableExtra("usuario");
         idPalestra = getIntent().getIntExtra("idPalestra", -1);

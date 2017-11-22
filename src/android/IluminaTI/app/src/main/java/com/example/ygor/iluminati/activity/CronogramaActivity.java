@@ -3,10 +3,12 @@ package com.example.ygor.iluminati.activity;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ygor.iluminati.R;
+import com.example.ygor.iluminati.activity.adapter.PalestrasAdapter;
 import com.example.ygor.iluminati.model.Palestra;
 import com.example.ygor.iluminati.network.task.BaseTask;
 import com.example.ygor.iluminati.network.responses.CronogramaResponse;
@@ -19,6 +21,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -32,12 +37,14 @@ public class CronogramaActivity extends Activity implements CalendarPickerView.O
     @BindView(R.id.tvTituloDia)
     TextView tituloDia;
 
-    @BindView(R.id.tvDadosDia)
-    TextView dadosDia;
+    @BindView(R.id.listaPalestras)
+    ListView listaPalestras;
 
     SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-    ArrayList<Palestra> palestras = new ArrayList<>();
+    Map<String, List<Palestra>> palestras = null;
     Palestra palestraSelecionada = null;
+    PalestrasAdapter adapter = null;
+    List<Palestra> palestrasLista = null;
     CalendarPickerView.FluentInitializer calendarInitializer;
     boolean loaded = false;
     boolean notify = true;
@@ -46,7 +53,10 @@ public class CronogramaActivity extends Activity implements CalendarPickerView.O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cronograma);
+        setTitle(getString(R.string.app_name) + " - Cronograma");
+
         notify = getIntent().getBooleanExtra("notify", true);
+        palestras = new HashMap<>();
 
         GetCronogramaTask task = new GetCronogramaTask(this, this);
         task.execute("http://192.168.15.8:3000/api/v1/");
@@ -57,32 +67,37 @@ public class CronogramaActivity extends Activity implements CalendarPickerView.O
         Calendar maior = Calendar.getInstance();
         maior.add(Calendar.YEAR, 1);
 
+        palestrasLista = new ArrayList<>();
+
+        adapter = new PalestrasAdapter(this, palestrasLista);
+
+        listaPalestras.setAdapter(adapter);
 
         calendario.setOnDateSelectedListener(this);
         calendarInitializer = calendario.init(hoje.getTime(), maior.getTime());
         calendarInitializer.inMode(CalendarPickerView.SelectionMode.SINGLE);
         calendarInitializer.withSelectedDate(hoje.getTime());
+        tituloDia.setText("Dia " + dateFormat.format(hoje.getTime()));
     }
 
     @Override
     public void onDateSelected(Date date) {
+        tituloDia.setText("Dia " + dateFormat.format(date));
         if (loaded) {
-            tituloDia.setText(dateFormat.format(date));
-            for (Palestra p : palestras) {
-                if (dateFormat.format(p.getData()).equals(dateFormat.format(date))) {
-                    palestraSelecionada = p;
-                    String dados = "Palestra: " + p.getNome();
-                    dadosDia.setText(dados);
-                }
-            }
+            List<Palestra> palestrasDia = palestras.get(dateFormat.format(date));
+
+            palestrasLista.clear();
+            if (palestrasDia != null)
+                palestrasLista.addAll(palestrasDia);
+            adapter.notifyDataSetChanged();
+
         }
     }
 
     @Override
     public void onDateUnselected(Date date) {
         palestraSelecionada = null;
-        dadosDia.setText("");
-        tituloDia.setText("");
+        tituloDia.setText("Selecione um dia");
     }
 
     @Override
@@ -90,6 +105,7 @@ public class CronogramaActivity extends Activity implements CalendarPickerView.O
         if (result != null) {
             Palestra p;
             Date maiorData = null;
+            String dia;
             StringBuilder strbNotificacao = new StringBuilder();
             try {
                 for (PalestraResponse palestra : result.getData()) {
@@ -98,7 +114,13 @@ public class CronogramaActivity extends Activity implements CalendarPickerView.O
                     p.setNome(palestra.getNome());
                     p.setHorario(palestra.getHorario());
                     p.getAlunos().addAll(palestra.getAlunosCheckin());
-                    palestras.add(p);
+
+                    dia = dateFormat.format(p.getData());
+
+                    if (!palestras.containsKey(dia))
+                        palestras.put(dia, new ArrayList<Palestra>());
+
+                    palestras.get(dia).add(p);
 
                     strbNotificacao.append(p.getNome())
                             .append(" - ")
@@ -120,7 +142,6 @@ public class CronogramaActivity extends Activity implements CalendarPickerView.O
                 }
 
                 Calendar calendar = Calendar.getInstance();
-                calendar.add(Calendar.MINUTE, 2);
 
                 if (notify)
                     NotificationHelper.newNotification(this,
@@ -128,8 +149,17 @@ public class CronogramaActivity extends Activity implements CalendarPickerView.O
                                                         titulo,
                                                         msg,
                                                         strbNotificacao,
-                                                        calendar.getTimeInMillis() + (1 * 60 * 1000),
+                                                        calendar.getTimeInMillis(),
                                                         this.getClass());
+
+                Calendar hoje = Calendar.getInstance();
+                List<Palestra> palestrasDia = palestras.get(dateFormat.format(hoje.getTime()));
+
+                palestrasLista.clear();
+                if (palestrasDia != null)
+                    palestrasLista.addAll(palestrasDia);
+                adapter.notifyDataSetChanged();
+
                 loaded = true;
             } catch (Exception e) {
                 Toast.makeText(this, "Falha ao obter os dados do cronograma. Tente novamente.", Toast.LENGTH_SHORT).show();

@@ -56,4 +56,5 @@ Com o repositório aberto:
 
 1. Abra o CMD(Prompt de comando).
 2. Abra a pasta onde foi feito o download do projeto e escolha a pasta "miniucb", que está em "src" > "server".
-3. Execute o comando "npm run start".
+3. Execute o comando "npm install".
+4. Execute o comando "npm run start".

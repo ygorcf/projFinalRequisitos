@@ -71,6 +71,8 @@ public class PerguntasActivity extends Activity implements RespostasJogoAdapter.
             finish();
         }
 
+        setTitle(getString(R.string.app_name) + " - Pergunta " + (indexPergunta + 1));
+
         PerguntasResponse.PerguntaResponse pergunta = perguntas.get(indexPergunta);
         List<String> respostas = new ArrayList<>();
 
@@ -81,6 +83,10 @@ public class PerguntasActivity extends Activity implements RespostasJogoAdapter.
     }
 
     private void responder() {
+        if (respostaEscolhida == null) {
+            Toast.makeText(this, "Escolha uma resposta.", Toast.LENGTH_LONG).show();
+            return;
+        }
         respostas.add(perguntas.get(indexPergunta).getRespostas().indexOf(respostaEscolhida));
         if (indexPergunta + 1 >= perguntas.size()) {
             finishPerguntas();

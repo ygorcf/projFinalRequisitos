@@ -12,14 +12,14 @@ public class SaveRespostasResponse extends BaseResponse<SaveRespostasResponse.Pe
 
     public static class PerguntasResponse {
 
-        private List<SaveRespostasTask.SaveRespostasObjectRequest> respostas;
+        private SaveRespostasTask.SaveRespostasObjectRequest respostas;
         private int pontuacao;
 
-        public List<SaveRespostasTask.SaveRespostasObjectRequest> getRespostas() {
+        public SaveRespostasTask.SaveRespostasObjectRequest getRespostas() {
             return respostas;
         }
 
-        public void setRespostas(List<SaveRespostasTask.SaveRespostasObjectRequest> respostas) {
+        public void setRespostas(SaveRespostasTask.SaveRespostasObjectRequest respostas) {
             this.respostas = respostas;
         }
 

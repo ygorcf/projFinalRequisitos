@@ -1,12 +1,13 @@
 package com.example.ygor.iluminati.network.responses;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by Ygor on 14/11/2017.
  */
 
-public class PalestraResponse {
+public class PalestraResponse implements Serializable {
 
     private String nome;
     private String horario;

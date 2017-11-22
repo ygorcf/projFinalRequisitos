@@ -1,13 +1,16 @@
 package com.example.ygor.iluminati.network.responses;
 
+import java.io.Serializable;
+import java.util.List;
+
 /**
  * Created by Ygor on 15/11/2017.
  */
 
-public class FeedbackResponse extends BaseResponse<FeedbackResponse.FeedbackObjectResponse> {
+public class FeedbackResponse extends BaseResponse<List<FeedbackResponse.FeedbackObjectResponse>> {
 
 
-    public static class FeedbackObjectResponse {
+    public static class FeedbackObjectResponse implements Serializable {
 
         private String matricula;
         private String comentario;

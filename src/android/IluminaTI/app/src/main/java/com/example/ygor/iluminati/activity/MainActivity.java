@@ -4,10 +4,12 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ygor.iluminati.R;
 import com.example.ygor.iluminati.model.Usuario;
+import com.example.ygor.iluminati.network.responses.PalestraResponse;
 import com.example.ygor.iluminati.network.task.BaseTask;
 import com.example.ygor.iluminati.network.task.CheckInPalestraTask;
 import com.example.ygor.iluminati.network.responses.CheckInResponse;
@@ -17,6 +19,7 @@ import com.google.zxing.integration.android.IntentResult;
 
 import java.io.IOException;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import retrofit2.Response;
@@ -26,12 +29,17 @@ public class MainActivity extends Activity implements BaseTask.CompleteListener<
     private Usuario usuario;
     private int idPalestra;
 
+    @BindView(R.id.tvInfo)
+    TextView tvInfo;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         usuario = (Usuario) getIntent().getSerializableExtra("usuario");
         ButterKnife.bind(this);
+
+        tvInfo.setText("Olá, " + usuario.getMatricula());
     }
 
     private void openCronograma() {
@@ -40,10 +48,11 @@ public class MainActivity extends Activity implements BaseTask.CompleteListener<
         startActivityForResult(i, 100);
     }
 
-    private void openEvento() {
+    private void openEvento(PalestraResponse palestra) {
         Intent i = new Intent(this, EventoActivity.class);
         i.putExtra("usuario", usuario);
         i.putExtra("idPalestra", idPalestra);
+        i.putExtra("palestraResponse", palestra);
         startActivityForResult(i, 100);
     }
 
@@ -91,7 +100,7 @@ public class MainActivity extends Activity implements BaseTask.CompleteListener<
     @Override
     public void onComplete(CheckInResponse result) {
         if (result.getData().isCheckin())
-            openEvento();
+            openEvento(result.getData().getPalestra());
         else
             Toast.makeText(this, result.getData().getMessage(), Toast.LENGTH_LONG).show();
     }

@@ -9,18 +9,26 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:orientation="vertical"
-    tools:context="com.example.ygor.iluminati.MainActivity">
+    tools:context="com.example.ygor.iluminati.activity.MainActivity">
+
+    <TextView
+        android:id="@+id/tvInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/fields_main_margin_bottom"/>
     
     <Button
         android:id="@+id/btnCheckin"
         android:text="@string/btnCheckin"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/fields_main_margin_bottom"/>
 
     <Button
         android:id="@+id/btnCronograma"
         android:text="@string/btnCronograma"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/fields_main_margin_bottom"/>
 
 </LinearLayout>
