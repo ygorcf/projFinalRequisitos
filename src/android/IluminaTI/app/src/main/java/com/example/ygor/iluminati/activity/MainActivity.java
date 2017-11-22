@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import com.example.ygor.iluminati.R;
 import com.example.ygor.iluminati.model.Usuario;
+import com.example.ygor.iluminati.network.responses.PalestraResponse;
 import com.example.ygor.iluminati.network.task.BaseTask;
 import com.example.ygor.iluminati.network.task.CheckInPalestraTask;
 import com.example.ygor.iluminati.network.responses.CheckInResponse;
@@ -47,10 +48,11 @@ public class MainActivity extends Activity implements BaseTask.CompleteListener<
         startActivityForResult(i, 100);
     }
 
-    private void openEvento() {
+    private void openEvento(PalestraResponse palestra) {
         Intent i = new Intent(this, EventoActivity.class);
         i.putExtra("usuario", usuario);
         i.putExtra("idPalestra", idPalestra);
+        i.putExtra("palestraResponse", palestra);
         startActivityForResult(i, 100);
     }
 
@@ -98,7 +100,7 @@ public class MainActivity extends Activity implements BaseTask.CompleteListener<
     @Override
     public void onComplete(CheckInResponse result) {
         if (result.getData().isCheckin())
-            openEvento();
+            openEvento(result.getData().getPalestra());
         else
             Toast.makeText(this, result.getData().getMessage(), Toast.LENGTH_LONG).show();
     }

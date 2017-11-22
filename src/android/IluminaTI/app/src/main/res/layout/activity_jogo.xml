@@ -9,12 +9,13 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:orientation="vertical"
-    tools:context="com.example.ygor.iluminati.JogoActivity">
+    tools:context="com.example.ygor.iluminati.activity.JogoActivity">
 
     <TextView
         android:text="@string/tvPerguntas"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/jogo_titulo_text_size"/>
 
     <TextView
         android:id="@+id/tvDescricao"

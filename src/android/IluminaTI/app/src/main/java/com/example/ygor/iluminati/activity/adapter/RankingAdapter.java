@@ -61,6 +61,7 @@ public class RankingAdapter extends BaseAdapter {
 
         holder.tvMatricula.setText(item.getMatricula());
         holder.tvPontuacao.setText(String.valueOf(item.getPontuacao()));
+        holder.tvPosicao.setText(String.valueOf(position + 1) + "º");
 
         return view;
     }
@@ -72,6 +73,9 @@ public class RankingAdapter extends BaseAdapter {
 
         @BindView(R.id.tvPontuacao)
         public TextView tvPontuacao;
+
+        @BindView(R.id.tvPosicao)
+        public TextView tvPosicao;
 
         public RankingHolder(View view) {
             ButterKnife.bind(this, view);

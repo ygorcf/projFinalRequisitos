@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:paddingTop="@dimen/items_palestras_margin_top"
+    android:paddingRight="@dimen/items_palestras_margin_right"
+    android:paddingBottom="@dimen/items_palestras_margin_bottom"
+    android:paddingLeft="@dimen/items_palestras_margin_left">
 
     <TextView
         android:id="@+id/tvTituloPalestra"

@@ -7,6 +7,7 @@ import android.widget.Toast;
 
 import com.example.ygor.iluminati.R;
 import com.example.ygor.iluminati.model.Usuario;
+import com.example.ygor.iluminati.network.responses.PalestraResponse;
 import com.example.ygor.iluminati.network.responses.RankingRespose;
 
 import butterknife.ButterKnife;
@@ -16,6 +17,7 @@ public class EventoActivity extends Activity {
 
     private Usuario usuario;
     private int idPalestra;
+    private PalestraResponse palestraResponse;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +25,9 @@ public class EventoActivity extends Activity {
         setContentView(R.layout.activity_evento);
         usuario = (Usuario) getIntent().getSerializableExtra("usuario");
         idPalestra = getIntent().getIntExtra("idPalestra", -1);
+        palestraResponse = (PalestraResponse) getIntent().getSerializableExtra("palestraResponse");
+
+        setTitle(getString(R.string.app_name) + " - " + palestraResponse.getNome());
 
         if (idPalestra == -1) {
             Toast.makeText(this, "Id da palestra invalido.", Toast.LENGTH_LONG).show();

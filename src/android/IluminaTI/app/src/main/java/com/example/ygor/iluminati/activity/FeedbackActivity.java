@@ -30,6 +30,8 @@ public class FeedbackActivity extends Activity implements BaseTask.CompleteListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feedback);
         usuario = (Usuario) getIntent().getSerializableExtra("usuario");
+
+        setTitle(getString(R.string.app_name) + " - Enviar feedback");
         idPalestra = getIntent().getIntExtra("idPalestra", -1);
 
         if (idPalestra == -1) {

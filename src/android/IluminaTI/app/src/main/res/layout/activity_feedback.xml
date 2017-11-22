@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_feedback"
     android:layout_width="match_parent"
@@ -9,18 +9,24 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:orientation="vertical"
-    tools:context="com.example.ygor.iluminati.FeedbackActivity">
+    tools:context="com.example.ygor.iluminati.activity.FeedbackActivity">
 
     <EditText
         android:id="@+id/campoComentario"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/campoComentario" />
+        android:inputType="textMultiLine"
+        android:hint="@string/campoComentario"
+        android:layout_above="@+id/btnEnviar"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"/>
 
     <Button
-        android:id="@+id/btnEnviar"
+        android:id="@id/btnEnviar"
         android:text="@string/btnEnviar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"/>
 
-</LinearLayout>
+</RelativeLayout>

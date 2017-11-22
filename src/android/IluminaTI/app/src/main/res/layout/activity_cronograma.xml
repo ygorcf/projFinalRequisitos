@@ -19,25 +19,31 @@
         android:layout_alignParentLeft="true"
         android:layout_above="@+id/dadosDia"/>
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@id/dadosDia"
         android:layout_width="match_parent"
-        android:layout_height="192dp"
+        android:layout_height="@dimen/bloco_dados_palestra_size"
         android:layout_alignParentBottom="true"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/tvTituloDia"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:textSize="@dimen/dia_dados_palestra_text_size"
+            android:layout_marginBottom="@dimen/dia_dados_palestra_margin_bottom"/>
 
         <ListView
             android:id="@+id/listaPalestras"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"></ListView>
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@id/tvTituloDia"/>
 
 
-    </LinearLayout>
+    </RelativeLayout>
 
 
 </RelativeLayout>

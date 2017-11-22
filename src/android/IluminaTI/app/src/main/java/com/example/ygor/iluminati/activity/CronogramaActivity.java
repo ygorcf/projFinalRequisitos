@@ -53,6 +53,8 @@ public class CronogramaActivity extends Activity implements CalendarPickerView.O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_cronograma);
+        setTitle(getString(R.string.app_name) + " - Cronograma");
+
         notify = getIntent().getBooleanExtra("notify", true);
         palestras = new HashMap<>();
 
@@ -75,16 +77,18 @@ public class CronogramaActivity extends Activity implements CalendarPickerView.O
         calendarInitializer = calendario.init(hoje.getTime(), maior.getTime());
         calendarInitializer.inMode(CalendarPickerView.SelectionMode.SINGLE);
         calendarInitializer.withSelectedDate(hoje.getTime());
+        tituloDia.setText("Dia " + dateFormat.format(hoje.getTime()));
     }
 
     @Override
     public void onDateSelected(Date date) {
+        tituloDia.setText("Dia " + dateFormat.format(date));
         if (loaded) {
-            tituloDia.setText(dateFormat.format(date));
             List<Palestra> palestrasDia = palestras.get(dateFormat.format(date));
 
             palestrasLista.clear();
-            palestrasLista.addAll(palestrasDia);
+            if (palestrasDia != null)
+                palestrasLista.addAll(palestrasDia);
             adapter.notifyDataSetChanged();
 
         }
@@ -93,7 +97,7 @@ public class CronogramaActivity extends Activity implements CalendarPickerView.O
     @Override
     public void onDateUnselected(Date date) {
         palestraSelecionada = null;
-        tituloDia.setText("");
+        tituloDia.setText("Selecione um dia");
     }
 
     @Override
@@ -152,7 +156,8 @@ public class CronogramaActivity extends Activity implements CalendarPickerView.O
                 List<Palestra> palestrasDia = palestras.get(dateFormat.format(hoje.getTime()));
 
                 palestrasLista.clear();
-                palestrasLista.addAll(palestrasDia);
+                if (palestrasDia != null)
+                    palestrasLista.addAll(palestrasDia);
                 adapter.notifyDataSetChanged();
 
                 loaded = true;

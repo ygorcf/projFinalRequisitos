@@ -11,4 +11,17 @@
 
     <dimen name="fields_main_margin_bottom">12dp</dimen>
 
+    <dimen name="bloco_dados_palestra_size">196dp</dimen>
+    <dimen name="dia_dados_palestra_text_size">24dp</dimen>
+    <dimen name="dia_dados_palestra_margin_bottom">8dp</dimen>
+
+    <dimen name="items_palestras_margin_top">6dp</dimen>
+    <dimen name="items_palestras_margin_right">10dp</dimen>
+    <dimen name="items_palestras_margin_bottom">6dp</dimen>
+    <dimen name="items_palestras_margin_left">10dp</dimen>
+
+    <dimen name="buttons_evento_margin_bottom">12dp</dimen>
+
+    <dimen name="jogo_titulo_text_size">24dp</dimen>
+
 </resources>
