@@ -2,14 +2,14 @@ var palestras = [
   {
     nome: 'Abertura',
     horario: '08:30',
-    dia: new Date(2017, 10, 22).getTime(),
+    dia: new Date(2017, 11, 6).getTime(),
     alunosCheckin: [],
     feedbacks: [{matricula: 'ygor', comentario: 'Ótima Palestra'}]
   },
   {
     nome: 'Segurança da Informação',
     horario: '19:30',
-    dia: new Date(2017, 10, 22).getTime(),
+    dia: new Date(2017, 11, 6).getTime(),
     alunosCheckin: [],
     feedbacks: [],
 		perguntas: [
@@ -33,7 +33,7 @@ var palestras = [
   {
     nome: 'Papo de banco de dados',
     horario: '19:30',
-    dia: new Date(2017, 10, 24).getTime(),
+    dia: new Date(2017, 11, 8).getTime(),
     alunosCheckin: [],
     feedbacks: [],
 		perguntas: [
